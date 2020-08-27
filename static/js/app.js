@@ -46,7 +46,7 @@ function createPlots(id) {
                 y: otu_idstop.map(otu_ids => `OTU ${otu_ids}`),
                 text: otu_labelstop,
                 marker: { size: sample_valuestop,
-                  color: "green",
+                  color: "teal",
                 },
                 orientation: "h",
               }
@@ -54,12 +54,12 @@ function createPlots(id) {
             var layout = { title: "Top 10 OTU",
                           yaxis:{
                         tickmode:"linear",
-                  },
+                  }
                  
               };
                 Plotly.newPlot("bar", data, layout);
               // Create the Bubble Chart 
-          var trace1 = { x: otu_ids,
+            var trace1 = { x: otu_ids,
                 y: sample_valuestop,
                 mode: 'markers',
                 text: otu_labelstop,
@@ -67,39 +67,41 @@ function createPlots(id) {
                   color:otu_ids,
                   size: sample_valuestop,
                   colorscale: "Earth"
-              }
-          };
+                }
+            };
             var data1 = [trace1];
             var layout1 = {
                 title: "Top OTU ID",
-                showlegend: false,
-                height: 600,
-                width: 1500
+                // showlegend: false,
+                // height: 500,
+                // width: 1000
               };
             Plotly.newPlot("bubble", data1, layout1);
         
         // Build a Pie Chart
-            var trace2 = {
+          var trace2 = {
                 values: sample_valuestop,
                 labels: otu_idstop,
                 hovertext: otu_labelstop,
                 type: "pie",
-                                
-              }
-      
+            };        
               var data2 = [trace2];
               var layout2 = { title: "Top OTU 10",
-                  showlegend: true,
-                  height: 800,
-                  width: 500
+                 height: 800,
+                 width: 500
                 };
             Plotly.newPlot("pie", data2, layout2);
-
-              })
-            }
-    
- 
-//function to initiate plots
+              });    
+      
+            };
+      
+//Get the functions to display the data and the plots to the page
+function optionChanged(id) {
+              createPlots(id)[0];
+              getMetaData(id)[0];
+        };
+           
+ //function to initiate page
 function init(){
    var sampleData = ("data/samples.json")
    selOptions = d3.select("#selDataset");
@@ -107,22 +109,17 @@ function init(){
       sampleNames = data.names
     // console.log(sampleNames)
           selOptions.append("option")
-      .text(sampleNames)
-      .property("value", sampleNames);
+            .text(sampleNames)
+            .property("value", sampleNames);
    
-    // Use the first sample from the list to build the initial plots
+    // Use the first sample from the list to build the initial plots on page
         const showSample = sampleNames[0];
         createPlots(showSample);
         getMetaData(showSample)
       })
 
-    //Get the functions to display the data and the plots to the page
-            
-function optionChanged(id) {
-      createPlots(sampleNames)[0];
-      getMetaData(sampleNames)[0];
-}
-
-}   
     
+} 
+
+ 
 init();
