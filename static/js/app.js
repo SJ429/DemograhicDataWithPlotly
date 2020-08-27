@@ -2,50 +2,52 @@
 function getMetaData(id) {
     var sampleData = d3.json("data/samples.json")
       console.log(sampleData)
-    // See metadata
-    d3.json(sampleData).then((data) => {
-      var metadata_array = data.metadata;
+  //Use d3 to select the panel with id for metadata
+    d3.json(sampleData).then(function(data){
+      var metadata_array = data.metadata
       console.log(metadata_array);
       console.log(id);
-      // Filter the metadata and build the demo panel using id
-      var metadataFiltered = metadata_array.filter(metadata => metadata.id.toString() === id)[0];
-    //     Clear existing metadata
+  // Filter the metadata and build the demo panel using id
+var metadataFiltered = metadata_array.filter(metadata => metadata.id.toString() === id)[0];
+  //     Clear existing metadata
     d3.select("#sample-metadata").html("");
-    // Append metadata 
+  // Append metadata 
         Object.entries(metadataFiltered).forEach(([key, value]) => {
-      d3.select("#sample-metadata")
-         .append("p").text(`${key}: ${value}`);
+          d3.select("#sample-metadata")
+            .append("p").text(`${key}: ${value}`);
     });
   });
 }
-
+ // Create plots
 function createPlots(id) {
-    // Create plots
-    d3.json(sampleData).then((data) => {
-      var samples = data.samples;
-      // console.log(samples)
-      // filter the data samples to make plots
-      var plotsdataFiltered = samples.filter(chart => chart.id.toString( ) === id)[0]; 
-        //  console.log(plotsdataFiltered)
+  var sampleData = d3.json("data/samples.json")
+      d3.json(sampleData).then(function(data) {
+      var plotsData = data.samples;
+       console.log(plotsData)
+      // filter the data to make plots
+      var plotsdataFiltered = plotsData.filter(chart => chart.id.toString( ) === id)[0]; 
+         console.log(plotsdataFiltered)
+
       var otu_ids = plotsdataFiltered.otu_ids;
       var sample_values = plotsdataFiltered.sample_values;
       var otu_labels = plotsdataFiltered.otu_labels;
-    
+    }) 
     //Get the top ten data for each category with slice() and reverse ids and 
     // sample_values.  
-      var otu_ids = otu_ids.slice(0, 10).reverse();
-      var sample_values = sample_values.slice(0, 10).reverse();
-      var otu_labels = otu_labels.slice(0, 10);
-    })
+     //Getting the top 10 
+      var otu_idstop = otu_ids.slice(0, 10).reverse();
+      var sample_valuestop = sample_values.slice(0, 10).reverse();
+      var otu_labelstop = otu_labels.slice(0, 10).reverse();
+    
   }
 
      //Create the Bar Chart 
         var trace = {
             type: "bar",
-            x: sample_values,
-            y: otu_ids.map(otu_ids => `OTU ${otu_ids}`),
-            text: labels,
-            marker: { size: sample_values,
+            x: sample_valuestop.reverse(),
+            y: otu_idstop.map(otu_ids => `OTU ${otu_ids}`).reverse(),
+            text: otu_labeltop.reverse(),
+            marker: { size: sample_valuestop,
               color: "blue",
             },
             orientation: "h",
@@ -66,12 +68,12 @@ function createPlots(id) {
   
      // Create the Bubble Chart 
        var trace1 = { x: otu_ids,
-            y: sample_values,
+            y: sample_valuestop,
             mode: 'markers',
-            text: otu_labels,
+            text: otu_labelstop,
             marker: {
               color:otu_ids,
-              size: sample_values,
+              size: sample_valuestop,
               colorscale: "Earth"
           }
       };
@@ -86,9 +88,9 @@ function createPlots(id) {
     
     // Build a Pie Chart
         var trace2 = {
-            values: sample_values,
-            labels: otu_ids,
-            hovertext: labels,
+            values: sample_valuestop,
+            labels: otu_idstop,
+            hovertext: labelstop,
             type: "pie",
             marker: {
               colorscale: "Earth"
@@ -103,11 +105,7 @@ function createPlots(id) {
           };
       Plotly.newPlot("pie", data2, layout2);
 
-function optionChanged(id) {
-      displayPlots(id);
-      displayMetaData(id);
-}
-
+//function to initiate plots
 function init(){
   sampleData.then(function(data) {
     sampleNames = data.names
@@ -119,10 +117,14 @@ function init(){
       .property("value", sampleid);
     })
     //Get the functions to display the data and the plots to the page
-      displyPlots(data.names[0]);
-      displayMetaData(data.names[0]);
+    displyPlots(data.names[0]);
+    displayMetaData(data.names[0]);
+      
+  function optionChanged(id) {
+      displayPlots(id);
+      displayMetaData(id);
+}
 });
 }
 
 init();
-
