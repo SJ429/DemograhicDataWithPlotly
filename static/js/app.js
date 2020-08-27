@@ -72,9 +72,9 @@ function createPlots(id) {
             var data1 = [trace1];
             var layout1 = {
                 title: "Top OTU ID",
-                // showlegend: false,
-                // height: 500,
-                // width: 1000
+                showlegend: false,
+                height: 500,
+                width: 1000
               };
             Plotly.newPlot("bubble", data1, layout1);
         
@@ -104,18 +104,18 @@ function optionChanged(id) {
  //function to initiate page
 function init(){
    var sampleData = ("data/samples.json")
-   selOptions = d3.select("#selDataset");
    d3.json(sampleData).then(function(data) {
-      sampleNames = data.names
+      selOptions = d3.select("#selDataset");
+       sampleNames = data.names
     // console.log(sampleNames)
-          selOptions.append("option")
+          sampleNames.forEach(sampleNames=> {selOptions.append("option")
             .text(sampleNames)
             .property("value", sampleNames);
-   
+          })
     // Use the first sample from the list to build the initial plots on page
-        const showSample = sampleNames[0];
-        createPlots(showSample);
-        getMetaData(showSample)
+        const showPlots = sampleNames[0];
+        createPlots(showPlots);
+        getMetaData(showPlots)
       })
 
     
