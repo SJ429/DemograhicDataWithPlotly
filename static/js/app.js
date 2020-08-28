@@ -15,16 +15,52 @@ function getMetaData(id) {
         Object.entries(metadataFiltered).forEach(([key, value]) => {
           d3.select("#sample-metadata")
             .append("p").text(`${key}: ${value}`);
-    });
-  });
-}
+     });
+});
+ } 
+ //Create a guage chart   
+ function bonus(id) {
+  var sampleData = ("data/samples.json")
+      d3.json(sampleData).then(function(data){
+      console.log(data)
+          var gaugedata = data.metadata
+              var gaugedataFiltered = gaugedata.filter(gauge => gauge.id.toString( ) === id)[0]; 
+              console.log(gaugedataFiltered)
+              var wfreq =gaugedataFiltered.wfreq
+              
+              var data3 = [
+              {     
+                  domain: { x: [0, 1], y: [0, 1] },
+                  value: wfreq,
+                  title: { text: "Weekly Washing Frequency Gauge" },
+                  type: "indicator",
+                  mode: "gauge+number+delta",
+                  delta: { reference: 9},
+                  gauge: {axis: { range: [null, 9] },
+                          steps: [
+                      { range: [0, 9], color: "lightgray" },
+                      { range: [2, 4], color: "teal" }
+                      ],
+                      threshold: {
+                      line: { color: "blue", width: 4 },
+                      thickness: 0.75,
+                      value: wfreq
+                      } 
+                  }
+                  }     
+              ];    
+              var layout3 = { width: 600, height: 450, margin: { t: 0, b: 0 } };
+              
+              Plotly.newPlot("gauge", data3, layout3);
+      })
+      }
  // Create plots
 function createPlots(id) {
   var sampleData = ("data/samples.json")
       d3.json(sampleData).then(function(data) {
           var plotsData = data.samples;
           console.log(plotsData)
-          // filter the data to make plots
+          // Filter the data to make plots
           var plotsdataFiltered = plotsData.filter(chart => chart.id.toString( ) === id)[0]; 
             console.log(plotsdataFiltered)
 
@@ -33,13 +69,13 @@ function createPlots(id) {
           var otu_labels = plotsdataFiltered.otu_labels;
          
         //Get the top ten data for each category with slice() and reverse ids and 
-        // sample_values.  
+        // sample_values and labels.  
         //Getting the top 10 
           var otu_idstop = otu_ids.slice(0, 10).reverse();
           var sample_valuestop = sample_values.slice(0, 10).reverse();
           var otu_labelstop = otu_labels.slice(0, 10).reverse();
            
-          //Create the Bar Chart 
+          //Create a bar chart 
           var trace = {
                 type: "bar",
                 x: sample_valuestop,
@@ -55,10 +91,9 @@ function createPlots(id) {
                           yaxis:{
                         tickmode:"linear",
                   }
-                 
-              };
-                Plotly.newPlot("bar", data, layout);
-              // Create the Bubble Chart 
+            };
+              Plotly.newPlot("bar", data, layout);
+              // Create a bubble chart 
             var trace1 = { x: otu_ids,
                 y: sample_valuestop,
                 mode: 'markers',
@@ -75,69 +110,23 @@ function createPlots(id) {
                 showlegend: false,
                 height: 500,
                 width: 1000
-              };
+          };
             Plotly.newPlot("bubble", data1, layout1);
-        
-        // Create a Pie Chart
-          var trace2 = {
+          // Create a pie chart
+            var trace2 = {
                 values: sample_valuestop,
                 labels: otu_idstop,
                 hovertext: otu_labelstop,
                 type: "pie",
             };        
-              var data2 = [trace2];
-              var layout2 = { title: "Top OTU 10",
+            var data2 = [trace2];
+            var layout2 = { title: "Top OTU 10",
                  height: 800,
                  width: 500
                 };
             Plotly.newPlot("pie", data2, layout2);
               });    
-      
-            };
-            // Create a Gauge Chart
-          function gauge(id) {
-          var sampleData = ("data/samples.json")
-          d3.json("data/samples.json").then(function(data){
-              console.log(data)
-              var plotsdataFiltered = plotsData.filter(chart => chart.id.toString( ) === id)[0]; 
-              console.log(plotsdataFiltered)
-              // var wfreq =plotsdataFiltered.wfreq
-              // var wfreq = data.metadata.map(data => data.wfreq)
-              //  console.log(`Washing Freq: ${wfreq}`)
-
-              var data3 = [
-                {     
-                    domain: { x: [0, 1], y: [0, 1] },
-                    value: wfreq,
-                    title: { text: "Weekly Washing Frequency" },
-                    type: "indicator",
-                    mode: "gauge+number+delta",
-                    delta: { reference: 380 },
-                    gauge: {axis: { range: [null, 500] },
-                            steps: [
-                        { range: [0, 250], color: "lightgray" },
-                        { range: [250, 400], color: "gray" }
-                        ],
-                      threshold: {
-                        line: { color: "teal", width: 4 },
-                        thickness: 0.75,
-                        value: wfreq
-                      } 
-                    }
-                  }     
-              ];    
-              var layout3 = { width: 600, height: 450, margin: { t: 0, b: 0 } };
-             Plotly.newPlot('gauge', data3, layout3);
-     
- 
-    })
-  }
-//Get the functions to display the data and the plots to the page
-function optionChanged(id) {
-              createPlots(id)[0];
-              getMetaData(id)[0];
-        };
-           
+          };
  //function to initiate page
 function init(){
    var sampleData = ("data/samples.json")
@@ -147,16 +136,19 @@ function init(){
     // console.log(sampleNames)
           sampleNames.forEach(sampleNames=> {selOptions.append("option")
             .text(sampleNames)
-            .property("value");
+            .property("value", sampleNames);
           })
     // Use the first sample from the list to build the initial plots on page
         const showPlots = sampleNames[0];
-        createPlots(showPlots);
-        
-      })
-
-    
+        createPlots(showPlots);  
+        bonus(showPlots)
+      })   
 } 
+//Get the functions to display the data and the plots to the page
+function optionChanged(id) {
+  createPlots(id);
+  getMetaData(id);
+  bonus(id)
+};
 
- 
 init();
