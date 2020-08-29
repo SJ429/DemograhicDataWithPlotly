@@ -140,7 +140,8 @@ function init(){
           })
     // Use the first sample from the list to build the initial plots on page
         const showPlots = sampleNames[0];
-        createPlots(showPlots);  
+        createPlots(showPlots); 
+        getMetaData(showPlots)
         bonus(showPlots)
       })   
 } 
