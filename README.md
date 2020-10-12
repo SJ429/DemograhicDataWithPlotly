@@ -1,4 +1,4 @@
-Belly Button Biodiversity Dashboard Analysis
+## Belly Button Biodiversity Dashboard Analysis
 An interactive dashboard was used to explore the Belly Button Biodiversity dataset which cataloged the microbes that colonize human navels was built. 
 
 ### About the Data
