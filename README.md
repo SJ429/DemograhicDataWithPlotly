@@ -1,16 +1,14 @@
-# plotly-challenge
+Belly Button Biodiversity Dashboard Analysis
 
-"http://robdunnlab.com/wp-content/uploads/microbes-sem.jpg"
+
+An interactive dashboard to explore the [Belly Button Biodiversity dataset](http://robdunnlab.com/projects/belly-button-biodiversity/), which catalogs the microbes that colonize human navels was built.
 
 ### About the Data
-
+"http://robdunnlab.com/wp-content/uploads/microbes-sem.jpg"
 The dataset reveals that a small handful of microbial species (also called operational taxonomic units, or OTUs, in the study) were present in more than 70% of people, while the rest were relatively rare.
 
 
-Hulcr, J. et al.(2012) _A Jungle in There: Bacteria in Belly Buttons are Highly Diverse, but Predictable_. Retrieved from: [http://robdunnlab.com/projects/belly-button-biodiversity/results-and-data/](http://robdunnlab.com/projects/belly-button-biodiversity/results-and-data/)
-
-In this assignment, an interactive dashboard to explore the [Belly Button Biodiversity dataset](http://robdunnlab.com/projects/belly-button-biodiversity/), which catalogs the microbes that colonize human navels was built.
-
+This project used JavaScript, Plotly.js, Python, HTML, CSS, Bootstrap, and Flask to explore the Belly Button Biodiverisity dataset. The data was analyzed and then I built three graphs using Plotly and Javascript. The pie chart shows the top ten samples for a particular sample id. The bubble chart shows all the samples and OTU ID data points. Metadata for the sample is also displayed, along with a gauge chart for wahing freequency. The display for each key/value pair from the metadata JSON object on the page. The graphs resize when the page size is modified.
 
 ## Step 1: Plotly
 
@@ -18,35 +16,32 @@ In this assignment, an interactive dashboard to explore the [Belly Button Biodiv
 
 2. Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that individual.
 
-* Use `sample_values` as the values for the bar chart.
+        * Use `sample_values` as the values for the bar chart.
 
-* Use `otu_ids` as the labels for the bar chart.
-
+        * Use `otu_ids` as the labels for the bar chart.
 
 3. Create a bubble chart that displays each sample.
 
-* Use `otu_ids` for the x values.
+        * Use `otu_ids` for the x values.
 
-* Use `sample_values` for the y values.
+        * Use `sample_values` for the y values.
 
-* Use `sample_values` for the marker size.
+        * Use `sample_values` for the marker size.
 
-* Use `otu_ids` for the marker colors.
+        * Use `otu_ids` for the marker colors.
 
-* Use `otu_labels` for the text values.
-
+        * Use `otu_labels` for the text values.
 
 4. Display the sample metadata, i.e., an individual's demographic information.
 
 5. Display each key-value pair from the metadata JSON object somewhere on the page.
 
 
-
 ## Advanced Challenge Assignment (Optional)
 
-* Adapt the Gauge Chart from <https://plot.ly/javascript/gauge-charts/> to plot the weekly washing frequency of the individual.
+    * Adapt the Gauge Chart from <https://plot.ly/javascript/gauge-charts/> to plot the weekly washing frequency of the individual.
 
-* Update the chart whenever a new sample is selected.
+    * The chart whenever a new sample is selected.
 
 
 
