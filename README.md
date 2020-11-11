@@ -6,10 +6,9 @@ An interactive dashboard was used to explore the Belly Button Biodiversity datas
 
 The Belly Button Analysis dashboard is at https://sj429.github.io/DemograhicDataWithPlotly/
 
-### About the Data
-The JSON sample dataset from http://robdunnlab.com/projects/belly-button-biodiversity reveals that a small handful of microbial species (also called operational taxonomic units, or OTUs, in the study) were present in more than 70% of people, while the rest were relatively rare.
 
-## Plotly.js
+
+## Languages and Technologie
 
 JavaScript, Plotly.js, Python, HTML, CSS, Bootstrap, and Flask were the languages and technologies used to build the Belly Button Biodiversity dashboard. 
 
