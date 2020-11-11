@@ -8,7 +8,7 @@ The Belly Button Analysis dashboard is at https://sj429.github.io/DemograhicData
 
 
 
-## Languages and Technologie
+## Languages and Technologies
 
 JavaScript, Plotly.js, Python, HTML, CSS, Bootstrap, and Flask were the languages and technologies used to build the Belly Button Biodiversity dashboard. 
 
