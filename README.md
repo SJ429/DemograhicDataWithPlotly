@@ -1,6 +1,10 @@
 ## Belly Button Biodiversity Dashboard Analysis
 An interactive dashboard was used to explore the Belly Button Biodiversity dataset which cataloged the microbes that colonize human navels. 
 
+Select a sample ID number from the dropdown menu to see the visualizations of that sample belly-button bacteria.
+
+
+
 ![](Images/Capture_1.PNG)
 ![](Images/Capture_3.PNG)
 
